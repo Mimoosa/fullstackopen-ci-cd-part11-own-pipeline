@@ -1,0 +1,42 @@
+name: deployment_pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  install_dependencies_and_check_style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install root dependencies
+        run: npm install
+      - name: Install frontend dependencies
+        run: npm --prefix frontend install
+      - name: Check style
+        run: npm run eslint
+  backend_tests:
+    needs: [install_dependencies_and_check_style]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - run: npm test
+  playwright_tests:
+    needs: [install_dependencies_and_check_style]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - run: npm run test:e2e
