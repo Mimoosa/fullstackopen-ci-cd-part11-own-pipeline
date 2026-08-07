@@ -8,12 +8,15 @@ const Blog = require('../models/blog')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
-const api = supertest(app)
-
+let api
 let token
 let blogToDelete
 
 beforeEach(async () => {
+  await mongoose.connection.asPromise()
+
+  api = supertest(app)
+
   await Blog.deleteMany({})
   await Blog.insertMany(helper.initialBlogs)
 
@@ -26,11 +29,9 @@ beforeEach(async () => {
 
   const passwordHash = await bcrypt.hash(credential.password, 10)
   const user = new User({ username: credential.username, passwordHash })
-
   await user.save()
 
   const loginResponse = await api.post('/api/login').send(credential)
-
   token = loginResponse.body.token
 
   const blogContent = {
