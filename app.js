@@ -25,6 +25,9 @@ app.use(express.static(path.join(__dirname, 'frontend', 'dist')))
 app.get('/health', (req, res) => {
   res.send('ok')
 })
+app.get('/version', (req, res) => {
+  res.send('1') // change this string to ensure a new version deployed
+})
 
 app.use(express.json())
 app.use(middleware.requestLogger)
