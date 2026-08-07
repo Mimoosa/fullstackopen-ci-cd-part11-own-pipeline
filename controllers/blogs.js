@@ -1,6 +1,5 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-const User = require('../models/user')
 const { userExtractor } = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
@@ -8,7 +7,7 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
-blogsRouter.post('/', userExtractor, async (request, response, next) => {
+blogsRouter.post('/', userExtractor, async (request, response) => {
   const body = request.body
 
   const user = request.user

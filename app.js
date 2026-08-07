@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const logger = require('./utils/logger')
 const config = require('./utils/config')
 const mongoose = require('mongoose')
@@ -19,6 +20,7 @@ mongoose
   .catch((error) => {
     logger.error('error connection to MongoDB:', error.message)
   })
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')))
 
 app.use(express.json())
 app.use(middleware.requestLogger)
@@ -32,7 +34,6 @@ if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)
 }
-
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
