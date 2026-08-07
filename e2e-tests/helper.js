@@ -25,6 +25,9 @@ async function createBlog(page, title, author, url) {
 
   await expect(blog).toBeVisible()
 
+  const link = blog.getByRole('link')
+  await expect(link).toBeVisible()
+
   return blog
 }
 
