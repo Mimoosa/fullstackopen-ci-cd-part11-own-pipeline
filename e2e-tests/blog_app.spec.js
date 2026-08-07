@@ -77,6 +77,8 @@ describe('Blog app', () => {
 
       await blog.getByRole('link').click()
 
+      await expect(page.getByRole('button', { name: 'remove' })).toBeVisible()
+
       const likeButton = page.locator('[data-testid="like-button"]')
 
       await expect(likeButton).toBeVisible()
