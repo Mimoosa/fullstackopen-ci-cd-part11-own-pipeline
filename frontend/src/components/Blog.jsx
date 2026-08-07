@@ -38,6 +38,7 @@ const Blog = ({
             <Typography variant="h6">{blog.likes} likes</Typography>
             {username && (
               <Button
+                data-testid="like-button"
                 variant="outlined"
                 color="primary"
                 onClick={() =>
