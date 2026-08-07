@@ -59,3 +59,13 @@ jobs:
         run: npx playwright install --with-deps
       - name: run playwright tests
         run: npm run test:e2e
+  deploy:
+    needs:
+      - install_dependencies_and_check_style
+      - backend_tests
+      - build_and_playwright_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deployment
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
