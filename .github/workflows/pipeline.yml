@@ -24,11 +24,6 @@ jobs:
         run: npm run eslint
   build_and_backend_tests_and_playwright_tests:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: test
-      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-      SECRET: ${{ secrets.SECRET }}
-      PORT: 3003
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -41,10 +36,20 @@ jobs:
       - name: build frontend
         run: npm run build:frontend
       - name: run backend tests
+        env:
+          NODE_ENV: test
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          SECRET: ${{ secrets.SECRET }}
+          PORT: 3003
         run: npm test
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: run playwright tests
+        env:
+          NODE_ENV: test
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          SECRET: ${{ secrets.SECRET }}
+          PORT: 3003
         run: npm run test:e2e
   deploy:
     needs:
