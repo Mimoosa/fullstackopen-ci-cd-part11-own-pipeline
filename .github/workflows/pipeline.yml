@@ -57,5 +57,7 @@ jobs:
         run: npm --prefix frontend install
       - name: build frontend
         run: npm run build:frontend
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: run playwright tests
         run: npm run test:e2e
