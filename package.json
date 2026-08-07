@@ -11,7 +11,7 @@
     "dev": "cross-env NODE_ENV=development node --watch index.js",
     "eslint": "eslint .",
     "test": "cross-env  NODE_ENV=test node --test",
-    "start:test": "cross-env NODE_ENV=test node --watch index.js",
+    "start:test": "cross-env NODE_ENV=test node index.js",
     "test:e2e": "playwright test",
     "test:report": "playwright show-report",
     "build:frontend": "npm --prefix frontend run build"
