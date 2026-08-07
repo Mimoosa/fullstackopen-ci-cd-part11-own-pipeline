@@ -22,6 +22,10 @@ mongoose
   })
 app.use(express.static(path.join(__dirname, 'frontend', 'dist')))
 
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
+
 app.use(express.json())
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
