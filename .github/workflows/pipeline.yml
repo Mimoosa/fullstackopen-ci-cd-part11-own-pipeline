@@ -23,7 +23,6 @@ jobs:
       - name: Check style
         run: npm run eslint
   backend_tests:
-    needs: [install_dependencies_and_check_style]
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test
@@ -39,7 +38,6 @@ jobs:
       - name: run backend tests
         run: npm test
   build_and_playwright_tests:
-    needs: [install_dependencies_and_check_style]
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test

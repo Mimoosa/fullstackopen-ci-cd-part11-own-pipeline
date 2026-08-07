@@ -19,9 +19,13 @@ async function createBlog(page, title, author, url) {
 
   await page.getByRole('button', { name: 'CREATE' }).click()
 
-  return page.getByRole('listitem').filter({
+  const blog = page.getByRole('listitem').filter({
     hasText: `${title} by ${author}`
   })
+
+  await expect(blog).toBeVisible()
+
+  return blog
 }
 
 const getBlogRow = (page, title, author) => {
