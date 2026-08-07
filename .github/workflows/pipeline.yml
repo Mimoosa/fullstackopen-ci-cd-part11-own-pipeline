@@ -22,23 +22,7 @@ jobs:
         run: npm --prefix frontend install
       - name: Check style
         run: npm run eslint
-  backend_tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-      - name: Install backend dependencies
-        run: npm install
-      - name: run backend tests
-        env:
-          NODE_ENV: test
-          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-          SECRET: ${{ secrets.SECRET }}
-          PORT: 3003
-        run: npm test
-  playwright_tests:
+  build_and_backend_tests_and_playwright_tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -51,6 +35,13 @@ jobs:
         run: npm --prefix frontend install
       - name: build frontend
         run: npm run build:frontend
+      - name: run backend tests
+        env:
+          NODE_ENV: test
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          SECRET: ${{ secrets.SECRET }}
+          PORT: 3003
+        run: npm test
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: run playwright tests
@@ -63,8 +54,7 @@ jobs:
   deploy:
     needs:
       - install_dependencies_and_check_style
-      - backend_tests
-      - playwright_tests
+      - build_and_backend_tests_and_playwright_tests
     runs-on: ubuntu-latest
     steps:
       - name: Trigger deployment
