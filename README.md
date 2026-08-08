@@ -11,3 +11,6 @@ The project includes:
 
 ## Live Blog App
 [https://fullstackopen-ci-cd-part11-blog-app.onrender.com](https://fullstackopen-ci-cd-part11-blog-app.onrender.com)
+
+## Link to other repo for exercise 21 and 22
+[https://github.com/Mimoosa/fullstackopen-ci-cd-part11-own-pipeline.git](https://github.com/Mimoosa/fullstackopen-ci-cd-part11-own-pipeline.git)
